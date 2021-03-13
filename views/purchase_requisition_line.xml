@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_requisition_view_form" model="ir.ui.view">
+        <field name="name">purchase.requisition.view.form.inherited</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form" />
+        <field name="arch" type="xml">
+
+            <header>
+                <xpath expr="/form/header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="check,draft,lock,in_progress,open,done" attrs="{'invisible': [('is_quantity_copy', '=', 'none')]}" />
+                    <!-- <field name="state_blanket_order" widget="statusbar" statusbar_visible="draft,ongoing,done" attrs="{'invisible': [('is_quantity_copy', '!=', 'none')]}" /> -->
+                </xpath>
+            </header>
+            <button name="action_in_progress" position="before">
+                <button name="action_check" string="Revisar" type="object" states="draft" class="oe_highlight" />
+            </button>
+            <button name="action_cancel" position="after">
+                <button name="action_lock" string="Desbloquear" type="object" states="lock" class="oe_highlight" groups="sales_team.group_sale_manager" />
+            </button>
+            <!-- <xpath expr="//field[@name='origin']" position="after">
+                <field name="total_acero" optional="Hide" invisible="0" />
+            </xpath> -->
+            <xpath expr="//form[1]/sheet/notebook/page/field[@name='line_ids']/tree/field[@name='product_id']" position="after">
+                <field name="cate" optional="Hide" />
+                <field name="consumible" optional="Hide" />
+                <field name="total_acero" optional="Hide" />
+                <field name="limite_acero" optional="Hide" />
+                <field name="total_consu" optional="Hide" />
+                <field name="limite_consu" optional="Hide" />
+                <field name="currency_id" optional="Hide" />
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
